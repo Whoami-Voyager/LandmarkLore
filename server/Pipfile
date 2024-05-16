@@ -1,16 +1,17 @@
 [[source]]
+name = "pypi"
 url = "https://pypi.org/simple"
 verify_ssl = true
-name = "pypi"
 
-[packages]
+[dev-packages]
 flask = "*"
 flask-migrate = "*"
 flask-cors = "*"
 python-dotenv = "*"
 flask-bcrypt = "*"
-flask-restful = "*"
 flask-sqlalchemy = "*"
 sqlalchemy = "*"
 sqlalchemy-serializer = "*"
-ipdb = "*"
+
+[requires]
+python_version = "3.8"
