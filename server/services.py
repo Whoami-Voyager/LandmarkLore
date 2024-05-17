@@ -29,7 +29,6 @@ db = SQLAlchemy(metadata=metadata)
 migrate = Migrate(app, db)
 db.init_app(app)
 
-api = Api(app)
 CORS(app)
 
 load_dotenv()
