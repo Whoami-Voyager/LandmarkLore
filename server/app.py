@@ -31,17 +31,20 @@ def markers():
 @app.route('/marker/<int:id>', methods = ['PATCH', 'DELETE'])
 def marker(id):
     marker = Marker.query.filter(Marker.id == id).first()
-    if request.method == "PATCH":
-        data = request.get_json()
-        for info in data:
-            setattr(marker, info, data[info])
-        db.session.add(marker)
-        db.session.commit()
-        return marker.to_dict(), 200
-    elif request.method == "DELETE":
-        db.session.delete(marker)
-        db.session.commit()
-        return {}, 204
+    if marker:
+        if request.method == "PATCH":
+            data = request.get_json()
+            for info in data:
+                setattr(marker, info, data[info])
+            db.session.add(marker)
+            db.session.commit()
+            return marker.to_dict(), 200
+        elif request.method == "DELETE":
+            db.session.delete(marker)
+            db.session.commit()
+            return {}, 204
+    else:
+        return {'error': 'could not find marker'}, 404
 
 @app.route('/users', methods = ['GET', 'POST'])
 def users():
@@ -68,17 +71,49 @@ def users():
 @app.route('/user/<int:id>', methods = ['PATCH', 'DELETE'])
 def user(id):
     user = User.query.filter(User.id == id).first()
-    if request.method == "PATCH":
-        data = request.get_json()
-        for bit in data:
-            setattr(user, bit, data[bit])
-        db.session.add(user)
-        db.session.commit()
-        return user.to_dict(), 200
-    elif request.method == "DELETE":
-        db.session.delete(user)
-        db.session.commit()
+    if user:
+        if request.method == "PATCH":
+            data = request.get_json()
+            for bit in data:
+                setattr(user, bit, data[bit])
+            db.session.add(user)
+            db.session.commit()
+            return user.to_dict(), 200
+        elif request.method == "DELETE":
+            db.session.delete(user)
+            db.session.commit()
+            return {}, 204
+    else:
+        return {'error': 'could not find user'}, 404
+
+@app.route('/log', methods = ['POST', 'DELETE'])
+def account():
+    if request.method == 'POST':
+        try:
+            data = request.get_json()
+            user = User.query.filter(User.username == data['username']).first()
+            if user:
+                if user.check_password(data['password']):
+                    session['user_id'] = user.id
+                    return user.to_dict(), 201
+                else:
+                    return {"error":"Not valid password"}, 400
+            else:
+                return {"error":"Not valid username"}, 400
+        except Exception as e:
+            print(e)
+            return {'error': 'login failed, please try again'}, 500
+    elif request.method == 'DELETE':
+        session.pop('user_id')
         return {}, 204
+
+@app.route('/session')
+def session():
+    if session.get('user_id'):
+        user = User.query.filter(User.id == session.get('user_id')).first()
+        return user.to_dict()
+    else:
+        return {'not logged in'}, 401
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

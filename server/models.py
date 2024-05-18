@@ -11,9 +11,9 @@ class User(db.Model, SerializerMixin):
 
     markers = db.relationship("Marker", back_populates="user", cascade="all, delete")
     favorites = db.relationship("Favorite", back_populates="user", cascade="all, delete")
-    friends = db.relationship("User", secondary="friendships", primaryjoin="User.id == Friendship.user_id", secondaryjoin="User.id == Friendship.friend_id", backref="friend_of")
+    friends = db.relationship("User", secondary="friendships", primaryjoin="User.id == Friendship.user_id", secondaryjoin="User.id == Friendship.friend_id")
 
-    serialize_rules = ("-_password", "-markers.user", "-favorites.user", "-friends.friend_of")
+    serialize_rules = ("-_password", "-markers.user", "-favorites.user", "-friends.friend_of", "-markers.favorites", "-friends.favorites", "-friends.friends")
 
     @hybrid_property
     def password(self):
@@ -39,9 +39,9 @@ class Marker(db.Model, SerializerMixin):
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
 
     user = db.relationship("User", back_populates="markers")
-    favorites = db.relationship("Favorite", back_populates="marker", cascade="all, delete-orphan")
+    favorites = db.relationship("Favorite", back_populates="marker", cascade="all, delete")
 
-    serialize_rules = ("-user.markers", "-favorites.marker")
+    serialize_rules = ("-user.markers", "-favorites.marker", "-user.friends", "-user.favorites")
 
 
 class Friendship(db.Model, SerializerMixin):
@@ -61,4 +61,4 @@ class Favorite(db.Model, SerializerMixin):
     user = db.relationship("User", back_populates="favorites")
     marker = db.relationship("Marker", back_populates="favorites")
 
-    serialize_rules = ("-user.favorites", "-marker.favorites", "-user.markers", "-marker.user")
+    serialize_rules = ("-user.favorites", "-marker.favorites", "-user.markers", "-marker.user", "-user.friends")

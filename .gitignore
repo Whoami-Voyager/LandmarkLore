@@ -1,7 +1,6 @@
 .vscode
 .venv
 .env
-package-lock.json
 Pipfile.lock
 instance
 migrations
