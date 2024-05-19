@@ -79,42 +79,42 @@ with app.app_context():
         user_id = 1
     )
     london = Marker(
-        caption = "This city sucks",
+        caption = "Got stabbed here",
         image_url = "image@url.com",
         latitude = 51.5074,
         longitude = -0.1278,
         user_id = 4
     )
     rome = Marker(
-        caption = "This city sucks",
+        caption = "Great Pizza",
         image_url = "image@url.com",
         latitude = 41.9028,
         longitude = 12.4964,
         user_id = 3
     )
     moscow = Marker(
-        caption = "This city sucks",
+        caption = "блять",
         image_url = "image@url.com",
         latitude = 55.7558,
         longitude = 37.6173,
         user_id = 4
     )
     sydney = Marker(
-        caption = "This city sucks",
+        caption = "Land down under",
         image_url = "image@url.com",
         latitude = -33.8688,
         longitude = 151.2093,
         user_id = 9
     )
     vancouver = Marker(
-        caption = "This city sucks",
+        caption = "Opioid capital of Canada",
         image_url = "image@url.com",
         latitude = 49.2827,
         longitude = 123.1207,
         user_id = 6
     )
     dubai = Marker(
-        caption = "This city sucks",
+        caption = "What color is your buggatti?",
         image_url = "image@url.com",
         latitude = 25.276987,
         longitude = 55.296249,
