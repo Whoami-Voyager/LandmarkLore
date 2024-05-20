@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 .leaflet-container {
-  height: 80vh;
+  height: 100vh;
 }

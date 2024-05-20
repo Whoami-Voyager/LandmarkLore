@@ -9,61 +9,61 @@ with app.app_context():
     Friendship.query.delete()
 
     jeff = User(
-        username = "jeff",
+        username = "Jeff",
         email = "jeff@email.com",
         password = "hellothere",
         icon = "image@url.com"
     )
     bezos = User(
-        username = "bezos",
+        username = "Bezos",
         email = "bezos@email.com",
         password = "yeet",
         icon = "hmmm@url.com"
     )
     elon = User(
-        username = "elon",
+        username = "Elon",
         email = "elon@email.com",
         password = "hellothere",
         icon = "image@url.com"
     )
     musk = User(
-        username = "musk",
+        username = "Musk",
         email = "musk@email.com",
         password = "yeet",
         icon = "hmmm@url.com"
     )
     andrew = User(
-        username = "andrew",
+        username = "Andrew",
         email = "andrew@email.com",
         password = "hellothere",
         icon = "image@url.com"
     )
     tristan = User(
-        username = "tristan",
+        username = "Tristan",
         email = "tristan@email.com",
         password = "yeet",
         icon = "hmmm@url.com"
     )
     tate = User(
-        username = "tate",
+        username = "Tate",
         email = "tate@email.com",
         password = "hellothere",
         icon = "image@url.com"
     )
     mark = User(
-        username = "mark",
+        username = "Mark",
         email = "mark@email.com",
         password = "yeet",
         icon = "hmmm@url.com"
     )
     bill = User(
-        username = "bill",
+        username = "Bill",
         email = "bill@email.com",
         password = "hellothere",
         icon = "image@url.com"
     )
     gates = User(
-        username = "gates",
+        username = "Gates",
         email = "gates@email.com",
         password = "yeet",
         icon = "hmmm@url.com"
@@ -75,7 +75,7 @@ with app.app_context():
         caption = "This city sucks",
         image_url = "image@url.com",
         latitude = 39.7392,
-        longitude = 104.9903,
+        longitude = -104.9903,
         user_id = 1
     )
     london = Marker(
@@ -110,11 +110,11 @@ with app.app_context():
         caption = "Opioid capital of Canada",
         image_url = "image@url.com",
         latitude = 49.2827,
-        longitude = 123.1207,
+        longitude = -123.1207,
         user_id = 6
     )
     dubai = Marker(
-        caption = "What color is your buggatti?",
+        caption = "What color is your Bugatti?",
         image_url = "image@url.com",
         latitude = 25.276987,
         longitude = 55.296249,
