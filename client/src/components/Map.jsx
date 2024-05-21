@@ -37,41 +37,64 @@ function Map() {
         });
     };
 
-    const addNewMarker = (event, caption) => {
-        event.preventDefault()
+    function addNewMarker(e, caption, location) {
+        e.preventDefault()
         const newMarker = {
             caption: caption,
             image_url: "something",
-            // latitude: latitude,
-            // longitude: longitude,
+            latitude: location.lat,
+            longitude: location.lng,
             user_id: 2
         }
         console.log(newMarker)
+        fetch('/api/markers', {
+            method: "POST",
+            headers: {
+                "Content-type": "Application/JSON"
+            },
+            body: JSON.stringify(newMarker)
+        })
+            .then(r => r.json())
+            .then(data => {
+                const newMarkers = [...marker, data]
+                setMarker(newMarkers)
+            })
+            .catch(() => {
+                alert("Something went wrong")
+            })
     }
-    
+
     function MapClickHandler() {
-        const [popup, setPopup] = useState(null);
+        const [location, setLocation] = useState(null)
         const [caption, setCaption] = useState('')
-        console.log(caption)
+        const [image, setImage] = useState(null)
+        const [showMarker, setShowMarker] = useState(false)
 
         useMapEvents({
             click(e) {
-                console.log(e)
-                setPopup(
-                    <Popup position={e.latlng}>
-                        <div>You clicked the map at {e.latlng.toString()}</div>
-                        <h1>Create New Post:</h1>
-                        <form onSubmit={(e) => addNewMarker(e, caption)}>
-                            <input onChange={(e) => setCaption(e.target.value)} placeholder='caption' id='caption' />
-                            <input type='file' accept='image/jpeg, image/png, image/bmp, image/tiff, image/webp' />
-                            <button type='submit'>Add Post</button>
-                        </form>
-                    </Popup>
-                );
+                setLocation(e.latlng)
+                setShowMarker((showMarker) => !showMarker)
             }
-        });
+        })
 
-        return popup;
+        return (
+            <>
+                {
+                    showMarker
+                        ?
+                        <Popup position={location} >
+                            <h1>Create New Post:</h1>
+                            <form onSubmit={(e) => addNewMarker(e, caption, location)}>
+                                <input onChange={(e) => setCaption(e.target.value)} placeholder='caption' autoComplete='off' id='caption' />
+                                <input type='file' accept='image/jpeg, image/png, image/bmp, image/tiff, image/webp' onChange={(e) => setImage(e.target.files)} />
+                                <button type='submit'>Add Post</button>
+                            </form>
+                        </Popup>
+                        :
+                        <></>
+                }
+            </>
+        )
     }
 
     return (

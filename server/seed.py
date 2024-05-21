@@ -100,7 +100,7 @@ with app.app_context():
         user_id = 4
     )
     sydney = Marker(
-        caption = "Land down under",
+        caption = "ǝʇɐɯ ᴉO",
         image_url = "image@url.com",
         latitude = -33.8688,
         longitude = 151.2093,
