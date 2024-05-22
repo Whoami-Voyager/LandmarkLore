@@ -46,13 +46,9 @@ def marker(id):
     else:
         return {'error': 'could not find marker'}, 404
 
-@app.route('/users', methods = ['GET', 'POST'])
+@app.route('/users', methods = ['POST'])
 def users():
-    if request.method == "GET":
-        users = User.query.all()
-        user = [item.to_dict() for item in users]
-        return user, 200
-    elif request.method == "POST":
+    if request.method == "POST":
         data = request.get_json()
         try:
             new_user = User(
@@ -61,6 +57,7 @@ def users():
                 password=data['password'],
                 icon=data['icon']
             )
+            session["user_id"] = new_user.id
             db.session.add(new_user)
             db.session.commit()
             return new_user.to_dict(), 201
@@ -68,11 +65,13 @@ def users():
             print(e)
             return {"error": "post failed"}, 500
 
-@app.route('/user/<int:id>', methods = ['PATCH', 'DELETE'])
+@app.route('/user/<int:id>', methods = ['GET', 'PATCH', 'DELETE'])
 def user(id):
     user = User.query.filter(User.id == id).first()
     if user:
-        if request.method == "PATCH":
+        if request.method == "GET":
+            return user.to_dict(), 200
+        elif request.method == "PATCH":
             data = request.get_json()
             for bit in data:
                 setattr(user, bit, data[bit])
@@ -86,7 +85,7 @@ def user(id):
     else:
         return {'error': 'could not find user'}, 404
 
-@app.route('/log', methods = ['POST', 'DELETE'])
+@app.route('/login', methods = ['POST', 'DELETE'])
 def account():
     if request.method == 'POST':
         try:
@@ -108,12 +107,16 @@ def account():
         return {}, 204
 
 @app.route('/session')
-def session():
-    if session.get('user_id'):
-        user = User.query.filter(User.id == session.get('user_id')).first()
-        return user.to_dict()
-    else:
-        return {'not logged in'}, 401
+def check_session():
+    try:
+        if session.get("user_id"):
+            user = User.query.filter(User.id == session.get("user_id")).first()
+            return user.to_dict()
+        else:
+            return {"error": "Not logged in"}, 401
+    except Exception as e:
+        print(e)
+        return {"error": "Internal Server Error"}, 500
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

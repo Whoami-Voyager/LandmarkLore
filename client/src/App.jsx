@@ -1,21 +1,52 @@
 import { useState, useEffect } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Login from './components/Login'
-import Singup from './components/Signup'
+import Signup from './components/Signup'
 import Map from './components/Map'
 import Profile from './components/Profile'
 import Error from './components/Error'
 
 function App() {
+  const [userId, setUserId] = useState(0)
+
+  useEffect(() => {
+    fetch('/api/session')
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          console.log('please log in')
+        }
+      })
+      .then(data => {
+        if (data !== undefined) {
+          setUserId(data['id']);
+        }
+      })
+      .catch(error => {
+        console.error('Session check failed:', error);
+      });
+  }, []);
+
+  console.log(userId)
 
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/login' element={<Login />} />
-        <Route path='/singup' element={<Singup />} />
-        <Route path='/' element={<Map />} />
-        <Route path='/profile' element={<Profile />} />
-        <Route path='*' element={<Error />} />
+        {userId === 0 
+        ? (
+          <>
+            <Route path='/login' element={<Login setUserId={setUserId} />} />
+            <Route path='/signup' element={<Signup setUserId={setUserId} />} />
+            <Route path='*' element={<Login setUserId={setUserId} />} />
+          </>
+        ) : (
+          <>
+            <Route path='/' element={<Map userId={userId} />} />
+            <Route path='/profile' element={<Profile userId={userId} />} />
+            <Route path='*' element={<Error />} />
+          </>
+        )}
       </Routes>
     </BrowserRouter>
   )
