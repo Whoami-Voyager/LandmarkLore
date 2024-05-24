@@ -1,13 +1,16 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom"
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer } from 'react-leaflet';
 import MarkerClusterGroup from "react-leaflet-cluster";
-import { Icon, divIcon } from 'leaflet';
+import { divIcon } from 'leaflet';
 import MapClickHandler from './MapClickHandler';
+import Popups from './Popups';
 import "leaflet/dist/leaflet.css";
 
-function Map({ userId }) {
+function Map({ userId, setUserId }) {
     const [marker, setMarker] = useState([]);
+    const [userData, setUserData] = useState([])
+    const [showMarker, setShowMarker] = useState(false);
 
     const navigate = useNavigate()
 
@@ -20,38 +23,11 @@ function Map({ userId }) {
         fetch(`/api/user/${userId}`)
             .then(r => r.json())
             .then(data => {
-                console.log(data)
+                setUserData(data)
             })
     }, [userId]);
 
-    const newIcon = new Icon({
-        iconUrl: "/location.png",
-        iconSize: [40, 40]
-    });
-
-    const popups = marker.map(markers => {
-        if (markers.user_id === userId) {
-            return <Marker icon={newIcon} key={markers.id} position={[markers.latitude, markers.longitude]}>
-                <Popup key={markers.id}>
-                    <h1 className='m-4 text-center'>{markers.user.username}</h1>
-                    <div className='flex-row'>
-                        <button className='m-1'>Edit</button>
-                        <button className='text-red-500 m-1' onClick={(e) => deleteMarker(e)}>Delete</button>
-                    </div>
-                    <h2 className='m-2'>{markers.caption}</h2>
-                    {markers.image_url ? <img className='w-36 mx-auto' src={markers.image_url} /> : <></>}
-                </Popup>
-            </Marker>
-        } else {
-            return <Marker icon={newIcon} key={markers.id} position={[markers.latitude, markers.longitude]}>
-                <Popup key={markers.id}>
-                    <h1 className='m-4 text-center'>{markers.user.username}</h1>
-                    <h2 className='m-2'>{markers.caption}</h2>
-                    {markers.image_url ? <img className='w-36 mx-auto' src={markers.image_url} /> : <></>}
-                </Popup>
-            </Marker>
-        }
-    });
+    console.log(userData)
 
     const clusterIcon = (cluster) => new divIcon({
         html: `<div class='h-12 w-12 rounded-2xl flex justify-center items-center'>${cluster.getChildCount()}</div>`,
@@ -64,6 +40,7 @@ function Map({ userId }) {
             method: "DELETE"
         })
         navigate('/login')
+        setUserId(0)
     }
 
     function addNewMarker(e, caption, location, image) {
@@ -91,12 +68,44 @@ function Map({ userId }) {
             });
     }
 
+    function deleteMarker(e, id) {
+        e.preventDefault()
+        const updatedMarkers = marker.filter(marker => marker.id !== id);
+        setMarker(updatedMarkers);
+        fetch(`/api/marker/${id}`, {
+            method: "DELETE"
+        })
+    }
+
+    function editMarker(e, id) {
+        e.preventDefault()
+        setShowMarker(true)
+        fetch(`/api/marker/${id}`, {
+            method: "PATCH",
+            headers: {
+                "Content-type": "Application/JSON"
+            },
+            body: JSON.stringify(newCaption)
+                .then(r => {
+                    if (r.ok) {
+                        isEditing(false)
+                        r.json()
+                    } else {
+                        alert("Something went wrong please try again")
+                    }
+                })
+                .then(data => {
+                    console.log(data)
+                })
+        })
+    }
+
     return (
         <>
             <div className='flex flex-row'>
                 <h1>LandmarkLore</h1>
                 <img src='/land.png' className='w-12' />
-                <button className='justify-self-end' onClick={() => handleLogout()}>Log Out</button>
+                <button className='content-end' onClick={() => handleLogout()}>Log Out</button>
             </div>
             <MapContainer center={[39.8283, -98.5795]} zoom={5}>
                 <TileLayer
@@ -107,9 +116,9 @@ function Map({ userId }) {
                     chunkedLoading
                     iconCreateFunction={clusterIcon}
                 >
-                    {popups}
+                    <Popups marker={marker} userId={userId} deleteMarker={deleteMarker} />
                 </MarkerClusterGroup>
-                <MapClickHandler addNewMarker={addNewMarker} />
+                <MapClickHandler addNewMarker={addNewMarker} showMarker={showMarker} setShowMarker={setShowMarker} editMarker={editMarker}/>
             </MapContainer>
         </>
     );

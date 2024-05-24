@@ -28,25 +28,23 @@ function App() {
       });
   }, []);
 
-  console.log(userId)
-
   return (
     <BrowserRouter>
       <Routes>
-        {userId === 0 
-        ? (
-          <>
-            <Route path='/login' element={<Login setUserId={setUserId} />} />
-            <Route path='/signup' element={<Signup setUserId={setUserId} />} />
-            <Route path='*' element={<Login setUserId={setUserId} />} />
-          </>
-        ) : (
-          <>
-            <Route path='/' element={<Map userId={userId} />} />
-            <Route path='/profile' element={<Profile userId={userId} />} />
-            <Route path='*' element={<Error />} />
-          </>
-        )}
+        {userId === 0
+          ? (
+            <>
+              <Route path='/login' element={<Login setUserId={setUserId} />} />
+              <Route path='/signup' element={<Signup setUserId={setUserId} />} />
+              <Route path='*' element={<Login setUserId={setUserId} />} />
+            </>
+          ) : (
+            <>
+              <Route path='/' element={<Map userId={userId} setUserId={setUserId}/>} />
+              <Route path='/profile' element={<Profile userId={userId} />} />
+              <Route path='*' element={<Error />} />
+            </>
+          )}
       </Routes>
     </BrowserRouter>
   )
