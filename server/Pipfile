@@ -12,6 +12,7 @@ flask-bcrypt = "*"
 flask-sqlalchemy = "*"
 sqlalchemy = "*"
 sqlalchemy-serializer = "*"
+cloudinary = "*"
 
 [dev-packages]
 

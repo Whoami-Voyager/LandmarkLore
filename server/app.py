@@ -1,6 +1,12 @@
 from services import *
 from models import *
 
+cloudinary.config(
+    cloud_name='dbbrrtr9t',
+    api_key=os.getenv('api_key'),
+    api_secret=os.getenv('api_secret')
+)
+
 @app.route('/')
 def normal():
     return '<h1>This is the home route<h1>'
@@ -40,6 +46,16 @@ def marker(id):
             db.session.commit()
             return marker.to_dict(), 200
         elif request.method == "DELETE":
+            image_url = marker.image_url
+            public_id = image_url.split('/')[-1].split('.')[0]
+            if public_id:
+                try:
+                    cloudinary.uploader.destroy(public_id)
+                except Exception as e:
+                    print(f"Error deleting image from Cloudinary: {e}")
+                    return {'error': 'Failed to delete image from Cloudinary'}, 500
+            else:
+                pass
             db.session.delete(marker)
             db.session.commit()
             return {}, 204

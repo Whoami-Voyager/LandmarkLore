@@ -10,7 +10,6 @@ import "leaflet/dist/leaflet.css";
 function Map({ userId, setUserId }) {
     const [marker, setMarker] = useState([]);
     const [userData, setUserData] = useState([])
-    const [showMarker, setShowMarker] = useState(false);
 
     const navigate = useNavigate()
 
@@ -43,63 +42,6 @@ function Map({ userId, setUserId }) {
         setUserId(0)
     }
 
-    function addNewMarker(e, caption, location, image) {
-        e.preventDefault();
-        const newMarker = {
-            caption: caption,
-            image_url: image,
-            latitude: location.lat,
-            longitude: location.lng,
-            user_id: userId
-        };
-        fetch('/api/markers', {
-            method: "POST",
-            headers: {
-                "Content-type": "Application/JSON"
-            },
-            body: JSON.stringify(newMarker)
-        })
-            .then(r => r.json())
-            .then(data => {
-                setMarker([...marker, data]);
-            })
-            .catch(() => {
-                alert("Something went wrong");
-            });
-    }
-
-    function deleteMarker(e, id) {
-        e.preventDefault()
-        const updatedMarkers = marker.filter(marker => marker.id !== id);
-        setMarker(updatedMarkers);
-        fetch(`/api/marker/${id}`, {
-            method: "DELETE"
-        })
-    }
-
-    function editMarker(e, id) {
-        e.preventDefault()
-        setShowMarker(true)
-        fetch(`/api/marker/${id}`, {
-            method: "PATCH",
-            headers: {
-                "Content-type": "Application/JSON"
-            },
-            body: JSON.stringify(newCaption)
-                .then(r => {
-                    if (r.ok) {
-                        isEditing(false)
-                        r.json()
-                    } else {
-                        alert("Something went wrong please try again")
-                    }
-                })
-                .then(data => {
-                    console.log(data)
-                })
-        })
-    }
-
     return (
         <>
             <div className='flex flex-row'>
@@ -116,9 +58,9 @@ function Map({ userId, setUserId }) {
                     chunkedLoading
                     iconCreateFunction={clusterIcon}
                 >
-                    <Popups marker={marker} userId={userId} deleteMarker={deleteMarker} />
+                    <Popups marker={marker} userId={userId} setMarker={setMarker} />
                 </MarkerClusterGroup>
-                <MapClickHandler addNewMarker={addNewMarker} showMarker={showMarker} setShowMarker={setShowMarker} editMarker={editMarker}/>
+                <MapClickHandler userId={userId} marker={marker} setMarker={setMarker} />
             </MapContainer>
         </>
     );

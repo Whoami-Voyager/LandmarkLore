@@ -1,10 +1,8 @@
-import { useState } from "react";
-import { Marker, Popup } from "react-leaflet";
 import { Icon } from "leaflet";
+import Markers from "./Markers";
+import MyPopup from "./MyPopup";
 
-function Popups({ marker, userId, deleteMarker }) {
-    const [newCaption, setNewCaption] = useState('')
-    const [editing, isEditing] = useState(false)
+function Popups({ marker, userId, setMarker }) {
 
     const newIcon = new Icon({
         iconUrl: "/location.png",
@@ -13,46 +11,26 @@ function Popups({ marker, userId, deleteMarker }) {
 
     const popups = marker.map(markers => {
         if (markers.user_id === userId) {
-            return (
-                <Marker icon={newIcon} key={markers.id} position={[markers.latitude, markers.longitude]}>
-                    <Popup key={markers.id}>
-                        {editing
-                            ?
-                            <>
-                                <button onClick={() => isEditing(false)}>⬅ Back</button>
-                                <form onSubmit={(e) => editMarker(e, markers.id)}>
-                                    <input placeholder='type in new caption...' value={newCaption} onChange={(e) => setNewCaption(e.target.value)} />
-                                    <button type='submit'>Save</button>
-                                </form>
-                            </>
-                            :
-                            <>
-                                <h1 className='m-4 text-center'>{markers.user.username}</h1>
-                                <div className='flex-row'>
-                                    <button className='m-1' onClick={() => isEditing(true)}>Edit</button>
-                                    <button className='text-red-500 m-1' onClick={(e) => deleteMarker(e, markers.id)}>Delete</button>
-                                </div>
-                                <h2 className='m-2'>{markers.caption}</h2>
-                                {markers.image_url ? <img className='w-36 mx-auto' src={markers.image_url} /> : <></>}
-                            </>
-                        }
-                    </Popup>
-                </Marker>
-            )
+            return <MyPopup key={markers.id} markers={markers} marker={marker} newIcon={newIcon} setMarker={setMarker} />
         } else {
-            return (
-                <Marker icon={newIcon} key={markers.id} position={[markers.latitude, markers.longitude]} >
-                    <Popup key={markers.id}>
-                        <h1 className='m-4 text-center'>{markers.user.username}</h1>
-                        <h2 className='m-2'>{markers.caption}</h2>
-                        {markers.image_url ? <img className='w-36 mx-auto' src={markers.image_url} /> : <></>}
-                    </Popup>
-                </Marker>
-            );
+            return <Markers key={markers.id} marker={markers} newIcon={newIcon} />
         }
     });
 
-    return popups
+    console.log(popups)
+
+    return (
+        <>
+            {popups}
+            {/* <Popup position={[editingMarker.latitude, editingMarker.longitude]}>
+                    <button onClick={() => setEditingMarker(null)}>⬅ Back</button>
+                    <form onSubmit={(e) => editMarker(e, editingMarker.id)}>
+                        <input placeholder="Type new caption" value={newCaption} onChange={(e) => setNewCaption(e.target.value)} />
+                        <button type="submit">Save</button>
+                    </form>
+                </Popup> */}
+        </>
+    );
 }
 
-export default Popups
+export default Popups;

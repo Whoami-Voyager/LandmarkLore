@@ -2,10 +2,11 @@ import { useState } from 'react';
 import { Popup, useMapEvents } from 'react-leaflet';
 import Axios from 'axios'
 
-function MapClickHandler({ addNewMarker, showMarker, setShowMarker }) {
+function MapClickHandler({ userId, marker, setMarker }) {
     const [location, setLocation] = useState(null);
     const [caption, setCaption] = useState('');
     const [image, setImage] = useState('');
+    const [showMarker, setShowMarker] = useState(false);
 
     useMapEvents({
         click(e) {
@@ -21,17 +22,49 @@ function MapClickHandler({ addNewMarker, showMarker, setShowMarker }) {
 
         Axios.post('https://api.cloudinary.com/v1_1/dbbrrtr9t/image/upload', formData)
             .then(r => {
-                setImage(r.data.url);
+                setImage(r.data.url)
             });
     }
 
-    function handleSubmit(e){
+    function handleSubmit(e) {
         e.preventDefault()
         addNewMarker(e, caption, location, image)
         setShowMarker(false)
         setLocation(null)
         setCaption('')
         setImage('')
+    }
+
+    function addNewMarker(e, caption, location, image) {
+        e.preventDefault();
+        const newMarker = {
+            caption: caption,
+            image_url: image,
+            latitude: location.lat,
+            longitude: location.lng,
+            user_id: userId
+        };
+        fetch('/api/markers', {
+            method: "POST",
+            headers: {
+                "Content-type": "Application/JSON"
+            },
+            body: JSON.stringify(newMarker)
+        })
+            .then(r => {
+                if (r.ok) {
+                    return r.json();
+                } else {
+                    alert("Something went wrong please try again");
+                    throw new Error("Failed to edit marker");
+                }
+            })
+            .then(data => {
+                setMarker([...marker, data]);
+            })
+            .catch(error => {
+                console.error(error)
+            });
     }
 
     return (
