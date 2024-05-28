@@ -1,18 +1,12 @@
-import { useState } from "react";
 import { Popup } from "react-leaflet";
 
-function EditPopup({ markers, setIsEditing, handleCaptionChange, editMarker }) {
-    const [newCaption, setNewCaption] = useState('')
-    console.log("E")
+function EditPopup({ markers, setIsEditing, editMarker }) {
 
     return (
         <Popup position={[markers.latitude, markers.longitude]}>
-            {/* <button onClick={() => setIsEditing(false)}>⬅ Back</button> */}
-            <form onSubmit={(e) => console.log(e)}>
-                <input 
-                    placeholder="Type new caption"
-                    onChange={(e) => console.log(e.target.value)}
-                />
+            <button onClick={() => setIsEditing(false)}>⬅ Back</button>
+            <form onSubmit={(e) => editMarker(e, markers.id)}>
+                <input name="caption" placeholder="Type new caption" autoComplete="off" />
                 <button type="submit">Save</button>
             </form>
         </Popup>

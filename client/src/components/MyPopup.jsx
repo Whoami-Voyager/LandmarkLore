@@ -1,7 +1,11 @@
 import { Marker, Popup } from "react-leaflet";
+import { useState } from "react";
 import EditPopup from "./EditPopup";
 
 function MyPopup({ markers, marker, newIcon, setMarker }) {
+    const [editing, setIsEditing] = useState(false)
+
+    console.log(marker)
 
     function deleteMarker(e, id) {
         e.preventDefault();
@@ -19,7 +23,7 @@ function MyPopup({ markers, marker, newIcon, setMarker }) {
             headers: {
                 "Content-type": "Application/JSON"
             },
-            body: JSON.stringify({ caption: newCaption })
+            body: JSON.stringify({ caption: e.target.caption.value })
         })
             .then(r => {
                 if (r.ok) {
@@ -29,8 +33,11 @@ function MyPopup({ markers, marker, newIcon, setMarker }) {
                 }
             })
             .then(data => {
-                console.log(data);
-                setIsEditing(false);
+                const updatedMarkers = marker.map(m =>
+                    m.id === id ? { ...m, caption: data.caption } : m
+                );
+                setMarker(updatedMarkers);
+                setIsEditing(false)
             })
             .catch(error => {
                 console.error(error);
@@ -50,10 +57,10 @@ function MyPopup({ markers, marker, newIcon, setMarker }) {
                     {markers.image_url ? <img className='w-36 mx-auto' src={markers.image_url} alt="marker" /> : null}
                 </Popup>
             </Marker>
-            <EditPopup
-                markers={markers}
-                // editMarker={editMarker}
-            />
+            {editing
+                ? <EditPopup markers={markers} editMarker={editMarker} setIsEditing={setIsEditing} />
+                : <></>
+            }
         </>
     );
 }
