@@ -17,20 +17,7 @@ function Popups({ marker, userId, setMarker }) {
         }
     });
 
-    console.log(popups)
-
-    return (
-        <>
-            {popups}
-            {/* <Popup position={[editingMarker.latitude, editingMarker.longitude]}>
-                    <button onClick={() => setEditingMarker(null)}>⬅ Back</button>
-                    <form onSubmit={(e) => editMarker(e, editingMarker.id)}>
-                        <input placeholder="Type new caption" value={newCaption} onChange={(e) => setNewCaption(e.target.value)} />
-                        <button type="submit">Save</button>
-                    </form>
-                </Popup> */}
-        </>
-    );
+    return popups
 }
 
 export default Popups;
