@@ -73,9 +73,9 @@ def users():
                 password=data['password'],
                 icon=data['icon']
             )
-            session["user_id"] = new_user.id
             db.session.add(new_user)
             db.session.commit()
+            session["user_id"] = new_user.id
             return new_user.to_dict(), 201
         except Exception as e:
             print(e)

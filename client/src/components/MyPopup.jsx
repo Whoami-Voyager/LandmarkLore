@@ -5,8 +5,6 @@ import EditPopup from "./EditPopup";
 function MyPopup({ markers, marker, newIcon, setMarker }) {
     const [editing, setIsEditing] = useState(false)
 
-    console.log(marker)
-
     function deleteMarker(e, id) {
         e.preventDefault();
         const updatedMarkers = marker.filter(marker => marker.id !== id);
@@ -48,13 +46,15 @@ function MyPopup({ markers, marker, newIcon, setMarker }) {
         <>
             <Marker icon={newIcon} position={[markers.latitude, markers.longitude]}>
                 <Popup>
-                    <h1 className='m-4 text-center'>{markers.user.username}</h1>
-                    <div className='flex-row'>
-                        <button className='m-1' onClick={() => setIsEditing(true)}>Edit</button>
-                        <button className='text-red-500 m-1' onClick={(e) => deleteMarker(e, markers.id)}>Delete</button>
+                    <div className="font-FallingSky p-4">
+                        <h1 className='text-center text-xl font-bold mb-4'>{markers.user.username}</h1>
+                        <div className='flex justify-center'>
+                            <button className='m-1' onClick={() => setIsEditing(true)}>Edit</button>
+                            <button className='m-1 text-red-500' onClick={(e) => deleteMarker(e, markers.id)}>Delete</button>
+                        </div>
+                        <p className='text-center mt-4 mb-2'>{markers.caption}</p>
+                        {markers.image_url && <img src={markers.image_url} alt="marker" />}
                     </div>
-                    <h2 className='m-2'>{markers.caption}</h2>
-                    {markers.image_url ? <img className='w-36 mx-auto' src={markers.image_url} alt="marker" /> : null}
                 </Popup>
             </Marker>
             {editing

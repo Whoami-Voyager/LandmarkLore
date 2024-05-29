@@ -8,6 +8,7 @@ import Error from './components/Error'
 
 function App() {
   const [userId, setUserId] = useState(0)
+  const [userData, setUserData] = useState([])
 
   useEffect(() => {
     fetch('/api/session')
@@ -40,8 +41,8 @@ function App() {
             </>
           ) : (
             <>
-              <Route path='/' element={<Map userId={userId} setUserId={setUserId}/>} />
-              <Route path='/profile' element={<Profile userId={userId} />} />
+              <Route path='/' element={<Map userId={userId} setUserData={setUserData} userData={userData} setUserId={setUserId} />} />
+              <Route path='/profile' element={<Profile userId={userId} userData={userData} setUserData={setUserData} setUserId={setUserId} />} />
               <Route path='*' element={<Error />} />
             </>
           )}

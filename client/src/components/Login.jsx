@@ -45,24 +45,25 @@ function Login({ setUserId }) {
 
     return (
         <>
-            <div className='flex flex-row'>
-                <h1>LandmarkLore</h1>
-                <img src='/land.png' className='w-12' />
-            </div>
-            <div>
-                <h2>Welcome to LandmarkLore</h2>
-                <form onSubmit={(e) => logIn(e)}>
-                    <div>
-                        <h3>Username:</h3>
-                        <input id="username"  className="input" autoComplete="username" onChange={(e) => setLoginUser(e.target.value)} />
+            <div className="min-h-screen flex items-center justify-center bg-gray-100">
+                <div className="font-FallingSky justify-center text-center border-2 mx-32 w-2/5 p-12 rounded-3xl shadow-lg bg-white">
+                    <div className='flex justify-center items-center'>
+                        <h1 className='m-5 text-4xl'>LandmarkLore</h1>
+                        <img src='/land.png' className='w-16' alt="LandmarkLore Logo" />
                     </div>
-                    <div>
-                        <h3>Password:</h3>
-                        <input type="password" className="input" id="password" autoComplete="current-password" onChange={(e) => setLoginPassword(e.target.value)} />
-                    </div>
-                    <button>Log In</button>
-                </form>
-                <h3>New to LandmarkLore? <Link to='/singup'>Singup</Link></h3>
+                    <form onSubmit={(e) => logIn(e)}>
+                        <div>
+                            <h2 className="text-xl">Username:</h2>
+                            <input id="username" className="input" autoComplete="username" onChange={(e) => setLoginUser(e.target.value)} />
+                        </div>
+                        <div>
+                            <h2 className="text-xl">Password:</h2>
+                            <input type="password" className="input" id="password" autoComplete="current-password" onChange={(e) => setLoginPassword(e.target.value)} />
+                        </div>
+                        <button type="submit" className="bg-grass hover:bg-bush shadow-xl text-white font-bold py-2 px-4 m-6 rounded">Log In</button>
+                    </form>
+                    <h3 className="mb-8">New to LandmarkLore? <Link to='/signup' className="border-b-2 border-grass hover:border-bush text-grass hover:text-bush">Signup</Link></h3>
+                </div>
             </div>
         </>
     )

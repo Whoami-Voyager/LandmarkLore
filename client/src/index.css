@@ -13,3 +13,8 @@
 .input-incorrect {
   @apply border-2 rounded-lg text-center m-3 shadow-md mb-6 border-red-600
 }
+
+@font-face {
+  font-family: 'FallingSky';
+  src: url(/FallingSky.otf);
+}

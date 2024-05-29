@@ -72,12 +72,14 @@ function MapClickHandler({ userId, marker, setMarker }) {
             {
                 showMarker && location &&
                 <Popup position={location}>
-                    <h1>Create New Post:</h1>
-                    <form onSubmit={(e) => handleSubmit(e)}>
-                        <input onChange={(e) => setCaption(e.target.value)} placeholder='caption' autoComplete='off' id='caption' />
-                        <input type='file' accept='image/jpeg, image/png, image/bmp, image/tiff, image/webp' onChange={(e) => uploadImage(e.target.files)} />
-                        <button type='submit'>Add Post</button>
-                    </form>
+                    <div className='flex flex-col font-FallingSky'>
+                        <h1 className='text-center'>Create New Post:</h1>
+                        <form className='flex flex-col' onSubmit={(e) => handleSubmit(e)}>
+                            <textarea placeholder='caption' autoComplete='off' id='caption' className='w-full h-64 max-h-64 my-6' onChange={(e) => setCaption(e.target.value)} />
+                            <input type='file' accept='image/jpeg, image/png, image/bmp, image/tiff, image/webp' onChange={(e) => uploadImage(e.target.files)} />
+                            <button type='submit' className='bg-green-800 text-white font-bold m-4 py-2 px-4 rounded transform transition-all duration-300 hover:bg-green-600 hover:scale-105 hover:shadow-lg'>Add Post</button>
+                        </form>
+                    </div>
                 </Popup>
             }
         </>

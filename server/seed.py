@@ -120,7 +120,117 @@ with app.app_context():
         longitude = 55.296249,
         user_id = 7
     )
-    db.session.add_all([denver,london,rome,sydney,moscow,vancouver,dubai])
+    new_york = Marker(
+    caption="The city that never sleeps",
+    image_url="https://www.nycgo.com/images/made/1.-Jin-Joo-Kim_600_399_70.jpg",
+    latitude=40.7128,
+    longitude=-74.0060,
+    user_id=2
+    )
+    tokyo = Marker(
+    caption="Land of the Rising Sun",
+    image_url="https://www.japan.travel/content/dam/nto/en/images/experience/attractions/guides/culture-and-heritage/001_top/001_main/001_main.jpg",
+    latitude=35.6895,
+    longitude=139.6917,
+    user_id=8
+    )
+    berlin = Marker(
+    caption="Capital of Germany",
+    image_url="https://cdn.getyourguide.com/img/location/5ffebf4ba07fb.jpeg/99.jpg",
+    latitude=52.5200,
+    longitude=13.4050,
+    user_id=10
+    )
+    toronto = Marker(
+    caption="The Six",
+    image_url="https://media.tacdn.com/media/attractions-splice-spp-674x446/0a/99/a6/22.jpg",
+    latitude=43.651070,
+    longitude=-79.347015,
+    user_id=11
+    )
+    beijing = Marker(
+    caption="Capital of China",
+    image_url="https://www.travelchinaguide.com/images/city/beijing/beijing.jpg",
+    latitude=39.9042,
+    longitude=116.4074,
+    user_id=12
+    )
+    rio_de_janeiro = Marker(
+    caption="Carnival Capital",
+    image_url="https://media.timeout.com/images/105211701/image.jpg",
+    latitude=-22.9068,
+    longitude=-43.1729,
+    user_id=13
+    )
+    cape_town = Marker(
+    caption="Mother City",
+    image_url="https://cdn.britannica.com/69/195669-050-535A27B4/Table-Mountain-Cape-Town-South-Africa.jpg",
+    latitude=-33.9249,
+    longitude=18.4241,
+    user_id=14
+    )
+    bangkok = Marker(
+    caption="City of Angels",
+    image_url="https://www.bangkok.com/info/images/bangkok-highlights.jpg",
+    latitude=13.7563,
+    longitude=100.5018,
+    user_id=15
+    )
+    mexico_city = Marker(
+    caption="Tenochtitlán",
+    image_url="https://static.dw.com/image/59912386_303.jpg",
+    latitude=19.4326,
+    longitude=-99.1332,
+    user_id=16
+    )
+    singapore = Marker(
+    caption="Lion City",
+    image_url="https://www.visitsingapore.com/content/dam/desktop/global/about-singapore/our-story/city-scape-architecture/vs-2023-marina-bay-sands-skyline-d.jpg",
+    latitude=1.3521,
+    longitude=103.8198,
+    user_id=17
+    )
+    madrid = Marker(
+    caption="Heart of Spain",
+    image_url="https://www.planetware.com/wpimages/2020/02/spain-madrid-attractions-top-attractions-plaza-mayor.jpg",
+    latitude=40.4168,
+    longitude=-3.7038,
+    user_id=18
+    )
+    istanbul = Marker(
+    caption="City of Two Continents",
+    image_url="https://images.unsplash.com/photo-1580327330312-efd14c01aa6d",
+    latitude=41.0082,
+    longitude=28.9784,
+    user_id=19
+    )
+    seoul = Marker(
+        caption="Soul of Asia",
+        image_url="https://cdn.britannica.com/72/160272-050-6208AC9B/Seoul-South-Korea.jpg",
+        latitude=37.5665,
+        longitude=126.9780,
+        user_id=20
+    )
+    cairo = Marker(
+        caption="City of a Thousand Minarets",
+        image_url="https://media.tacdn.com/media/attractions-splice-spp-674x446/07/3c/3f/33.jpg",
+        latitude=30.0444,
+        longitude=31.2357,
+        user_id=21
+    )
+    athens = Marker(
+        caption="Birthplace of Democracy",
+        image_url="https://www.history.com/.image/t_share/MTYxNzAyNTgxOTMyNDkzMTcw/parthenon-ancient-greece-gettyimages-143705558.jpg",
+        latitude=37.9838,
+        longitude=23.7275,
+        user_id=22
+    )
+    
+    db.session.add_all([
+    denver, london, rome, moscow, sydney, vancouver, dubai, new_york,
+    tokyo, berlin, toronto, beijing, rio_de_janeiro, cape_town, bangkok,
+    mexico_city, singapore, madrid, istanbul, seoul, cairo, athens
+    ])
     db.session.commit()
 
     fren = Friendship(
