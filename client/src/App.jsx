@@ -9,6 +9,7 @@ import Error from './components/Error'
 function App() {
   const [userId, setUserId] = useState(0)
   const [userData, setUserData] = useState([])
+  const [address, setAddress] = useState(null)
 
   useEffect(() => {
     fetch('/api/session')
@@ -27,6 +28,11 @@ function App() {
       .catch(error => {
         console.error('Session check failed:', error);
       });
+    fetch('https://api.ipify.org?format=json')
+      .then(r => r.json())
+      .then(data => {
+        setAddress(data.ip)
+      })
   }, []);
 
   return (
@@ -41,7 +47,7 @@ function App() {
             </>
           ) : (
             <>
-              <Route path='/' element={<Map userId={userId} setUserData={setUserData} userData={userData} setUserId={setUserId} />} />
+              <Route path='/' element={<Map userId={userId} setUserData={setUserData} userData={userData} setUserId={setUserId} address={address} />} />
               <Route path='/profile' element={<Profile userId={userId} userData={userData} setUserData={setUserData} setUserId={setUserId} />} />
               <Route path='*' element={<Error />} />
             </>

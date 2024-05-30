@@ -60,41 +60,41 @@ function Singup({ setUserId }) {
             <div className="min-h-screen flex items-center justify-center bg-gray-100">
                 <div className="font-FallingSky justify-center text-center border-2 mx-32 w-2/5 p-12 rounded-3xl shadow-lg bg-white">
                     <div className='flex justify-center items-center'>
-                        <h1 className="m-5 text-4xl">LandmarkLore</h1>
+                        <h1 className="m-5 text-4xl select-none">LandmarkLore</h1>
                         <img src='/land.png' className='w-16' />
                     </div>
                     <div>
-                        <h2 className="m-8 text-xl">Please type in information to create account:</h2>
+                        <h2 className="m-8 text-xl select-none">Please type in information to create account:</h2>
                         <form onSubmit={(e) => singup(e)}>
                             <div>
-                                <h3 className="text-xl">Username:</h3>
+                                <h3 className="text-xl select-none">Username:</h3>
                                 <input id="username" className="input" autoComplete="off" onChange={(e) => setUserName(e.target.value)} />
                             </div>
                             <div>
-                                <h3 className="text-xl">Email:</h3>
+                                <h3 className="text-xl select-none">Email:</h3>
                                 <input id="email" className="input" autoComplete="email" onChange={(e) => setUserEmail(e.target.value)} />
                             </div>
                             {incorrectPassword
                                 ?
                                 <>
                                     <div>
-                                        <h3 className="text-xl">Password:</h3>
+                                        <h3 className="text-xl select-none">Password:</h3>
                                         <input type="password" className="input" id="password" autoComplete="new-password" onChange={(e) => setUserPassword(e.target.value)} />
                                     </div>
                                     <div>
-                                        <h3 className="text-xl">Verify Password:</h3>
+                                        <h3 className="text-xl select-none">Verify Password:</h3>
                                         <input type="password" className="input" id="check-password" autoComplete="new-password" onChange={(e) => setCheckPassword(e.target.value)} />
                                     </div>
                                     <button className="bg-grass hover:bg-bush shadow-xl text-white font-bold py-2 px-4 m-6 rounded">Sign Up</button>
                                 </>
                                 :
                                 <>
-                                    <h3 className="text-xl">Password:</h3>
+                                    <h3 className="text-xl select-none">Password:</h3>
                                     <input type="password" className="input-incorrect" id="incorrect-password" autoComplete="new-password" onChange={(e) => setUserPassword(e.target.value)} />
-                                    <h4 className="mb-8">Passwords are not the same or must be at least 8 characters in length. Please re-enter password</h4>
-                                    <h3 className="text-xl">Verify Password:</h3>
+                                    <h4 className="mb-8 select-none">Passwords are not the same or must be at least 8 characters in length. Please re-enter password</h4>
+                                    <h3 className="text-xl select-none">Verify Password:</h3>
                                     <input type="password" className="input-incorrect" id="check-incorrect-password" autoComplete="new-password" onChange={(e) => setCheckPassword(e.target.value)} />
-                                    <h4 className="mb-8">Passwords are not the same or must be at least 8 characters in length. Please re-enter password</h4>
+                                    <h4 className="mb-8 select-none">Passwords are not the same or must be at least 8 characters in length. Please re-enter password</h4>
                                     <button className="bg-grass hover:bg-bush shadow-xl text-white font-bold py-2 px-4 m-6 rounded">Sign Up</button>
                                 </>
                             }

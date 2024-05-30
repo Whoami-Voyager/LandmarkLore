@@ -54,8 +54,6 @@ def marker(id):
                 except Exception as e:
                     print(f"Error deleting image from Cloudinary: {e}")
                     return {'error': 'Failed to delete image from Cloudinary'}, 500
-            else:
-                pass
             db.session.delete(marker)
             db.session.commit()
             return {}, 204
