@@ -53,12 +53,19 @@ To set up the project locally, follow these steps:
    pipenv install && pipenv shell
    ```
 
-5. **Start Flask API:**
+5. **Initialize Database**
+   ```bash
+   flask db init
+   flask db migrate
+   flask db upgrade
+   ```
+
+6. **Start Flask API:**
     ```bash
     python app.py
     ```
 
-6. **(Optional) Seed Database:**
+7. **(Optional) Seed Database:**
     ```bash
     python seed.py
     ```
