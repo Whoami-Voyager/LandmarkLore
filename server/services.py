@@ -1,4 +1,4 @@
-from flask import Flask, request, make_response, session
+from flask import Flask, request, make_response, session, render_template
 from flask_migrate import Migrate
 from flask_cors import CORS
 from dotenv import load_dotenv
@@ -12,9 +12,15 @@ import cloudinary
 import cloudinary.uploader
 import os
 
+load_dotenv()
 
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
+app = Flask(
+    __name__,
+    static_url_path='',
+    static_folder='../client/build',
+    template_folder='../client/build'
+)
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('database_uri')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.json.compact = False
 
@@ -32,8 +38,6 @@ migrate = Migrate(app, db)
 db.init_app(app)
 
 CORS(app)
-
-load_dotenv()
 
 bcrypt = Bcrypt(app)
 
