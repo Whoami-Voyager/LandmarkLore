@@ -85,7 +85,7 @@ function Singup({ setUserId }) {
                                         <h3 className="text-xl select-none">Verify Password:</h3>
                                         <input type="password" className="input" id="check-password" autoComplete="new-password" onChange={(e) => setCheckPassword(e.target.value)} />
                                     </div>
-                                    <button className="bg-grass hover:bg-bush shadow-xl text-white font-bold py-2 px-4 m-6 rounded">Sign Up</button>
+                                    <button className="bg-grass hover:bg-bush hover:scale-105 hover:shadow-lg shadow-xl text-white font-bold py-2 px-4 m-6 rounded">Sign Up</button>
                                 </>
                                 :
                                 <>
@@ -95,7 +95,7 @@ function Singup({ setUserId }) {
                                     <h3 className="text-xl select-none">Verify Password:</h3>
                                     <input type="password" className="input-incorrect" id="check-incorrect-password" autoComplete="new-password" onChange={(e) => setCheckPassword(e.target.value)} />
                                     <h4 className="mb-8 select-none">Passwords are not the same or must be at least 8 characters in length. Please re-enter password</h4>
-                                    <button className="bg-grass hover:bg-bush shadow-xl text-white font-bold py-2 px-4 m-6 rounded">Sign Up</button>
+                                    <button className="bg-grass hover:bg-bush hover:scale-105 hover:shadow-lg shadow-xl text-white font-bold py-2 px-4 m-6 rounded">Sign Up</button>
                                 </>
                             }
                         </form>

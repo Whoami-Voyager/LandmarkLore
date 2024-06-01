@@ -30,11 +30,13 @@ function Profile({ userId, userData, setUserData, setUserId }) {
         iconSize: [40, 40]
     });
 
-    const clusterIcon = (cluster) => new divIcon({
-        html: `<div class='h-12 w-12 rounded-2xl flex justify-center items-center bg-red-600 text-white'>${cluster.getChildCount()}</div>`,
-        className: "custom-marker-icon",
-        iconSize: [33, 33]
-    });
+    const clusterIcon = (cluster) => {
+        return new divIcon({
+            html: `<div class='bg-grass text-white h-10 w-10 rounded-full flex justify-center items-center'>${cluster.getChildCount()}</div>`,
+            className: "custom-marker-icon",
+            iconSize: [30, 30],
+        });
+    };
 
     const userPopup = userData.markers?.map((marker) => (
         <Markers key={marker.id} marker={marker} newIcon={newIcon} />
@@ -69,7 +71,7 @@ function Profile({ userId, userData, setUserData, setUserId }) {
                         </div>
                     </div>
                     <div className="flex justify-center w-full">
-                        <button className='mt-4 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded' onClick={(e) => deleteUsr(e)}>
+                        <button className='mt-4 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded hover:scale-105 hover:shadow-lg' onClick={(e) => deleteUsr(e)}>
                             ⚠️ Delete User ⚠️
                         </button>
                     </div>

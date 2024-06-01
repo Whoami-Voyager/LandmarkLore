@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from "react-router-dom"
 import { MapContainer, TileLayer } from 'react-leaflet';
-import MarkerClusterGroup from "react-leaflet-cluster";
 import { divIcon } from 'leaflet';
+import MarkerClusterGroup from 'react-leaflet-cluster';
 import MapClickHandler from './MapClickHandler';
 import Popups from './Popups';
 import "leaflet/dist/leaflet.css";

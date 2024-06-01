@@ -60,7 +60,7 @@ function Login({ setUserId }) {
                             <h2 className="text-xl select-none">Password:</h2>
                             <input type="password" className="input" id="password" autoComplete="current-password" onChange={(e) => setLoginPassword(e.target.value)} />
                         </div>
-                        <button type="submit" className="bg-grass hover:bg-bush shadow-xl text-white font-bold py-2 px-4 m-6 rounded">Log In</button>
+                        <button type="submit" className="bg-grass hover:bg-bush hover:scale-105 hover:shadow-lg shadow-xl text-white font-bold py-2 px-4 m-6 rounded">Log In</button>
                     </form>
                     <h3 className="mb-8 select-none">New to LandmarkLore? <Link to='/signup' className="border-b-2 border-grass hover:border-bush text-grass hover:text-bush">Signup</Link></h3>
                 </div>
